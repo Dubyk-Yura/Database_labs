@@ -92,7 +92,7 @@ class GeneralDAO(ABC):
             self._session.commit()
         except Exception:
             self._session.rollback()
-            raise 
+            raise
 
     def delete_all(self) -> None:
         """
@@ -100,3 +100,9 @@ class GeneralDAO(ABC):
         """
         self._session.query(self._domain_type).delete()
         self._session.commit()
+
+    def get_session(self):
+        """
+        Returns the SQLAlchemy session.
+        """
+        return self._session
