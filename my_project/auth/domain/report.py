@@ -21,8 +21,8 @@ class Report(db.Model, IDto):
     def put_into_dto(self) -> dict[str, object]:
         return {
             "id": self.id,
-            "type": self.status,
-            "date": self.type,
+            "type": self.type,
+            "date": self.date,
             "link": self.link,
         }
 

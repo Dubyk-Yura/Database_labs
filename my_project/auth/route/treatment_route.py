@@ -7,11 +7,6 @@ from my_project.auth.domain import Treatment
 treatment_bp = Blueprint('treatment', __name__, url_prefix='/treatment')
 
 
-@treatment_bp.get('/<int:diagnoses_id>/pets')
-def get_treatment_by_diagnoses(diagnoses_id: int) -> Response:
-    return make_response(jsonify(treatment_controller.find_by_diagnoses_id(diagnoses_id)), HTTPStatus.OK)
-
-
 @treatment_bp.get('/<int:treatment_id>')
 def get_treatment(treatment_id: int) -> Response:
     return make_response(jsonify(treatment_controller.find_by_id(treatment_id)), HTTPStatus.OK)

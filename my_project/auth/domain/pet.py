@@ -29,7 +29,7 @@ class Pet(db.Model, IDto):
     photo = db.Column(db.BLOB, nullable=True)
 
     # ForeignKey
-    pet_type_id = db.Column(db.Integer, db.ForeignKey('pet_type.id'), primary_key=True, nullable=False)
+    pet_type_id = db.Column(db.Integer, db.ForeignKey('pet_type.id'), nullable=False)
 
     # Relationship 1:M
     pet_type = db.relationship("PetType", backref="pet_")

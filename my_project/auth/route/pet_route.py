@@ -7,11 +7,6 @@ from my_project.auth.domain import Pet
 pet_bp = Blueprint('pet', __name__, url_prefix='/pet')
 
 
-@pet_bp.get('/<int:type_id>/type_id')
-def get_pet_by_type_id(type_id: int) -> Response:
-    return make_response(jsonify(pet_controller.find_by_pet_type_id(type_id)), HTTPStatus.OK)
-
-
 @pet_bp.get('/<int:pet_id>/clients')
 def get_clients_for_pet(pet_id: int) -> Response:
     return make_response(jsonify(pet_controller.get_clients_for_pet(pet_id)), HTTPStatus.OK)

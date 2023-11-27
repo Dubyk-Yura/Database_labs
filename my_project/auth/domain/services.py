@@ -10,7 +10,7 @@ class Services(db.Model, IDto):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
     name = db.Column(db.String(45), nullable=False, unique=True)
     price = db.Column(db.Integer, nullable=False)
-    duration = db.Column(db.Time, nullable=False)
+    duration = db.Column(db.String(10), nullable=False)
     description = db.Column(db.String(45), nullable=True)
 
     # ForeignKey

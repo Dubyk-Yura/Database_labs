@@ -10,10 +10,9 @@ class MedicineProceduresSchemes(db.Model, IDto):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
 
     # ForeignKey
-    medicine_id = db.Column(db.Integer, db.ForeignKey('medicine.id'), primary_key=True, nullable=False)
-    treatment_schemes_id = db.Column(db.Integer, db.ForeignKey('treatment_schemes.id'), primary_key=True,
-                                     nullable=False)
-    procedures_id = db.Column(db.Integer, db.ForeignKey('procedures.id'), primary_key=True, nullable=False)
+    medicine_id = db.Column(db.Integer, db.ForeignKey('medicine.id'), nullable=False)
+    treatment_schemes_id = db.Column(db.Integer, db.ForeignKey('treatment_schemes.id'), nullable=False)
+    procedures_id = db.Column(db.Integer, db.ForeignKey('procedures.id'), nullable=False)
 
     # Relationship 1:M
     medicine = db.relationship("Medicine", backref="medicine_procedures_schemes_")

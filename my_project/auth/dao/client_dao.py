@@ -14,7 +14,7 @@ class ClientDAO(GeneralDAO):
         session = self.get_session()
         pet_ids = (
             session.query(client_pet.c.pet_id)
-            .filter(client_pet.c.client_id == client_id).all()
+            .filter(client_pet.c.client_Id == client_id).all()
         )
         pet_ids = [pet_id for (pet_id,) in pet_ids]
         pets = session.query(Pet).filter(Pet.id.in_(pet_ids)).all()
@@ -28,8 +28,8 @@ class ClientDAO(GeneralDAO):
         """
         session = self.get_session()
         service_ids = (
-            session.query(ScheduledVisit.c.services_id)
-            .filter(ScheduledVisit.c.client_id == client_id).all()
+            session.query(ScheduledVisit.services_id)
+            .filter(ScheduledVisit.client_id == client_id).all()
         )
         service_ids = [service_id for (service_id,) in service_ids]
         services = session.query(Services).filter(Services.id.in_(service_ids)).all()

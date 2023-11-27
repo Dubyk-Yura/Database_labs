@@ -7,11 +7,6 @@ from my_project.auth.domain import Specialists
 specialists_bp = Blueprint('specialists', __name__, url_prefix='/specialists')
 
 
-@specialists_bp.get('/<string:specialist_name>/name')
-def get_specialist_by_name(specialist_name: str) -> Response:
-    return make_response(jsonify(specialists_controller.find_by_name(specialist_name)), HTTPStatus.OK)
-
-
 @specialists_bp.get('')
 def get_all_specialists() -> Response:
     return make_response(jsonify(specialists_controller.find_all()), HTTPStatus.OK)

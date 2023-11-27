@@ -12,11 +12,6 @@ def get_pets_for_diagnoses(diagnoses_id: int) -> Response:
     return make_response(jsonify(diagnoses_controller.get_pets_for_diagnoses(diagnoses_id)), HTTPStatus.OK)
 
 
-@diagnoses_bp.get('/<string:diagnoses_name>/name')
-def get_diagnoses_by_name(diagnoses_name: str) -> Response:
-    return make_response(jsonify(diagnoses_controller.find_by_name(diagnoses_name)), HTTPStatus.OK)
-
-
 @diagnoses_bp.get('')
 def get_all_diagnoses() -> Response:
     return make_response(jsonify(diagnoses_controller.find_all()), HTTPStatus.OK)

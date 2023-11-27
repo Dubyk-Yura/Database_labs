@@ -7,11 +7,6 @@ from my_project.auth.domain import Procedures
 procedures_bp = Blueprint('procedures', __name__, url_prefix='/procedures')
 
 
-@procedures_bp.get('/<string:procedure_name>/name')
-def get_procedure_by_name(procedure_name: str) -> Response:
-    return make_response(jsonify(procedures_controller.find_by_name(procedure_name)), HTTPStatus.OK)
-
-
 @procedures_bp.get('')
 def get_all_procedures() -> Response:
     return make_response(jsonify(procedures_controller.find_all()), HTTPStatus.OK)

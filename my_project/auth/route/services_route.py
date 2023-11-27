@@ -7,11 +7,6 @@ from my_project.auth.domain import Services
 services_bp = Blueprint('services', __name__, url_prefix='/services')
 
 
-@services_bp.get('/<int:specialists_id>/specialists')
-def get_services_by_specialists(specialists_id: int) -> Response:
-    return make_response(jsonify(services_controller.find_by_specialists_id(specialists_id)), HTTPStatus.OK)
-
-
 @services_bp.get('/<int:service_id>/clients')
 def get_services_by_clients(service_id: int) -> Response:
     return make_response(jsonify(services_controller.get_clients_for_service(service_id)), HTTPStatus.OK)

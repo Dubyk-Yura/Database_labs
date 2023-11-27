@@ -8,12 +8,6 @@ medicine_procedures_schemes_bp = Blueprint('medicine_procedures_schemes', __name
                                            url_prefix='/medicine_procedures_schemes')
 
 
-@medicine_procedures_schemes_bp.get('/<int:medicine_id>/medicine_id')
-def get_by_medicine_id(medicine_id: int) -> Response:
-    return make_response(jsonify(medicine_procedures_schemes_controller.find_by_medicine_id(medicine_id)),
-                         HTTPStatus.OK)
-
-
 @medicine_procedures_schemes_bp.get('')
 def get_all_medicine_procedures_schemes() -> Response:
     return make_response(jsonify(medicine_procedures_schemes_controller.find_all()), HTTPStatus.OK)

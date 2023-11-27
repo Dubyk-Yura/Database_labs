@@ -5,14 +5,6 @@ from my_project.auth.domain import Diagnoses, Pet, pet_diagnoses
 class DiagnosesDAO(GeneralDAO):
     _domain_type = Diagnoses
 
-    def find_by_name(self, name: str) -> list[object]:
-        """
-        Gets Status objects from database table by field status.
-        :param name: name value
-        :return: search objects
-        """
-        return self._session.query(Diagnoses).filter(Diagnoses.name == name).order_by(Diagnoses.name).all()
-
     def get_pets_for_diagnoses(self, diagnoses_id: int) -> list[Pet]:
         """
         Gets all pets for a specific diagnoses by diagnoses ID.

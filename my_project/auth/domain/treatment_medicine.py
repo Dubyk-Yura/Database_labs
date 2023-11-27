@@ -11,7 +11,7 @@ class TreatmentMedicine(db.Model, IDto):
 
     # ForeignKey
     treatment_id = db.Column(db.Integer, db.ForeignKey('treatment.id'), nullable=False)
-    medicine_id = db.Column(db.Integer, db.ForeignKey('medicine.id'), primary_key=True, nullable=False)
+    medicine_id = db.Column(db.Integer, db.ForeignKey('medicine.id'), nullable=False)
 
     # Relationship 1:M
     treatment = db.relationship("Treatment", backref="treatment_medicine_")
