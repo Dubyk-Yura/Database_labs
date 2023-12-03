@@ -21,6 +21,16 @@ def get_all_diagnoses() -> Response:
 def get_diagnoses(diagnoses_id: int) -> Response:
     return make_response(jsonify(diagnoses_controller.find_by_id(diagnoses_id)), HTTPStatus.OK)
 
+@diagnoses_bp.post('/<int:diagnoses_id>/add_pet')
+def connect_pet_and_diagnoses_from_pet(diagnoses_id: int):
+    try:
+        data = request.get_json()
+        pet_id = data.get('pet_id')
+        diagnoses_controller.connect_pet_and_diagnoses_from_diagnoses(diagnoses_id, pet_id)
+        return make_response(jsonify({"message": "Diagnoses added successfully"}), HTTPStatus.OK)
+    except Exception as e:
+        return make_response(jsonify({"error": str(e)}), HTTPStatus.INTERNAL_SERVER_ERROR)
+
 
 @diagnoses_bp.post('')
 def create_diagnoses() -> Response:

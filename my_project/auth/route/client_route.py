@@ -27,6 +27,17 @@ def get_all_clients() -> Response:
     return make_response(jsonify(client_controller.find_all()), HTTPStatus.OK)
 
 
+@client_bp.post('/<int:client_id>/add_pet')
+def connect_pet_and_client_from_client(client_id: int):
+    try:
+        data = request.get_json()
+        pet_id = data.get('pet_id')
+        client_controller.connect_pet_and_client_from_client(client_id, pet_id)
+        return make_response(jsonify({"message": "Pet added successfully"}), HTTPStatus.OK)
+    except Exception as e:
+        return make_response(jsonify({"error": str(e)}), HTTPStatus.INTERNAL_SERVER_ERROR)
+
+
 @client_bp.post('')
 def create_client() -> Response:
     content = request.get_json()

@@ -8,5 +8,5 @@ class DiagnosesService(GeneralService):
     def get_pets_for_diagnoses(self, diagnoses_id: int):
         return self._dao.get_pets_for_diagnoses(diagnoses_id)
 
-
-
+    def connect_pet_and_diagnoses_from_diagnoses(self, diagnoses_id: int, pet_id: int):
+        return self._dao.connect_pet_and_diagnoses_from_diagnoses(diagnoses_id, pet_id)

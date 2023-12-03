@@ -27,6 +27,31 @@ def get_pet(pet_id: int) -> Response:
     return make_response(jsonify(pet_controller.find_by_id(pet_id)), HTTPStatus.OK)
 
 
+@pet_bp.post('/<int:pet_id>/add_client')
+def connect_pet_and_client_from_pet(pet_id: int):
+    try:
+        data = request.get_json()
+        client_id = data.get('client_id')
+
+        pet_controller.connect_pet_and_client_from_pet(pet_id, client_id)
+
+        return make_response(jsonify({"message": "Pet added successfully"}), HTTPStatus.OK)
+
+    except Exception as e:
+        return make_response(jsonify({"error": str(e)}), HTTPStatus.INTERNAL_SERVER_ERROR)
+
+
+@pet_bp.post('/<int:pet_id>/add_diagnoses')
+def connect_pet_and_diagnoses_from_pet(pet_id: int):
+    try:
+        data = request.get_json()
+        diagnoses_id = data.get('diagnoses_id')
+        pet_controller.connect_pet_and_diagnoses_from_pet(pet_id, diagnoses_id)
+        return make_response(jsonify({"message": "Diagnoses added successfully"}), HTTPStatus.OK)
+    except Exception as e:
+        return make_response(jsonify({"error": str(e)}), HTTPStatus.INTERNAL_SERVER_ERROR)
+
+
 @pet_bp.post('')
 def create_pet() -> Response:
     content = request.get_json()

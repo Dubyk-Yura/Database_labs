@@ -11,3 +11,5 @@ class ClientController(GeneralController):
     def get_services_for_client(self, client_id: int):
         return self._service.get_services_for_client(client_id)
 
+    def connect_pet_and_client_from_client(self, client_id: int, pet_id: int):
+        self._service.connect_pet_and_client_from_client(client_id, pet_id)

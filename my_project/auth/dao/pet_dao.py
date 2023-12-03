@@ -1,3 +1,5 @@
+from typing import Dict, List, Any
+
 from my_project.auth.dao.general_dao import GeneralDAO
 from my_project.auth.domain import Client, client_pet, Pet, Diagnoses, pet_diagnoses
 
@@ -5,7 +7,7 @@ from my_project.auth.domain import Client, client_pet, Pet, Diagnoses, pet_diagn
 class PetDAO(GeneralDAO):
     _domain_type = Pet
 
-    def get_clients_for_pet(self, pet_id: int) -> list[Client]:
+    def get_clients_for_pet(self, pet_id: int) -> dict[str, list[Any] | Any]:
         """
         Gets all clients for a specific pet by pet's ID.
         :param pet_id: ID of the pet
@@ -18,9 +20,14 @@ class PetDAO(GeneralDAO):
         )
         client_ids = [client_id for (client_id,) in client_ids]
         clients = session.query(Client).filter(Client.id.in_(client_ids)).all()
-        return [client.put_into_dto() for client in clients]
+        pet = session.query(Pet).filter_by(id=pet_id).first()
+        data = {
+            "pet": pet.put_into_dto(),
+            "services": [client.put_into_dto() for client in clients]
+        }
+        return data
 
-    def get_diagnoses_for_pet(self, pet_id: int) -> list[Diagnoses]:
+    def get_diagnoses_for_pet(self, pet_id: int) -> dict[str, list[Any] | Any]:
         """
         Gets all diagnoses for a specific pet by pet's ID.
         :param pet_id: ID of the pet
@@ -33,4 +40,19 @@ class PetDAO(GeneralDAO):
         )
         diagnoses_ids = [diagnoses_id for (diagnoses_id,) in diagnoses_ids]
         clients = session.query(Diagnoses).filter(Diagnoses.id.in_(diagnoses_ids)).all()
-        return [diagnoses.put_into_dto() for diagnoses in clients]
+        pet = session.query(Pet).filter_by(id=pet_id).first()
+        data = {
+            "pet": pet.put_into_dto(),
+            "diagnoses": [diagnoses.put_into_dto() for diagnoses in clients]
+        }
+        return data
+
+    def connect_pet_and_client_from_pet(self, pet_id: int, client_id: int):
+        session = self.get_session()
+        session.execute(client_pet.insert().values(client_Id=client_id, pet_id=pet_id))
+        session.commit()
+
+    def connect_pet_and_diagnoses_from_pet(self, pet_id: int, diagnoses_id: int):
+        session = self.get_session()
+        session.execute(pet_diagnoses.insert().values(diagnoses_id=diagnoses_id, pet_id=pet_id))
+        session.commit()
