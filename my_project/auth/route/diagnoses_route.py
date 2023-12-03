@@ -21,6 +21,7 @@ def get_all_diagnoses() -> Response:
 def get_diagnoses(diagnoses_id: int) -> Response:
     return make_response(jsonify(diagnoses_controller.find_by_id(diagnoses_id)), HTTPStatus.OK)
 
+
 @diagnoses_bp.post('/<int:diagnoses_id>/add_pet')
 def connect_pet_and_diagnoses_from_pet(diagnoses_id: int):
     try:
@@ -53,6 +54,17 @@ def patch_diagnoses(diagnoses_id: int) -> Response:
     content = request.get_json()
     diagnoses_controller.patch(diagnoses_id, content)
     return make_response("Diagnoses updated", HTTPStatus.OK)
+
+
+@diagnoses_bp.patch('/<int:diagnoses_id>/remove_pet')
+def remove_pet_from_client(diagnoses_id) -> Response:
+    try:
+        data = request.get_json()
+        pet_id = data.get('pet_id')
+        diagnoses_controller.remove_pet_from_diagnoses(diagnoses_id, pet_id)
+        return make_response(jsonify({"message": "Pet removed successfully"}), HTTPStatus.OK)
+    except Exception as e:
+        return make_response(jsonify({"error": str(e)}), HTTPStatus.INTERNAL_SERVER_ERROR)
 
 
 @diagnoses_bp.delete('/<int:diagnoses_id>')

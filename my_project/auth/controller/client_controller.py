@@ -13,3 +13,6 @@ class ClientController(GeneralController):
 
     def connect_pet_and_client_from_client(self, client_id: int, pet_id: int):
         self._service.connect_pet_and_client_from_client(client_id, pet_id)
+
+    def remove_pet_from_client(self, client_id: int, pet_id: int):
+        self._service.remove_pet_from_client(client_id, pet_id)

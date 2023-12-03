@@ -10,3 +10,6 @@ class DiagnosesController(GeneralController):
 
     def connect_pet_and_diagnoses_from_diagnoses(self, diagnoses_id: int, pet_id: int):
         return self._service.connect_pet_and_diagnoses_from_diagnoses(diagnoses_id, pet_id)
+
+    def remove_pet_from_diagnoses(self, diagnoses_id: int, pet_id: int):
+        return self._service.remove_pet_from_diagnoses(diagnoses_id, pet_id)

@@ -61,6 +61,17 @@ def patch_client(client_id: int) -> Response:
     return make_response("Client updated", HTTPStatus.OK)
 
 
+@client_bp.patch('/<int:client_id>/remove_pet')
+def remove_pet_from_client(client_id) -> Response:
+    try:
+        data = request.get_json()
+        pet_id = data.get('pet_id')
+        client_controller.remove_pet_from_client(client_id, pet_id)
+        return make_response(jsonify({"message": "Pet removed successfully"}), HTTPStatus.OK)
+    except Exception as e:
+        return make_response(jsonify({"error": str(e)}), HTTPStatus.INTERNAL_SERVER_ERROR)
+
+
 @client_bp.delete('/<int:client_id>')
 def delete_client(client_id: int) -> Response:
     client_controller.delete(client_id)

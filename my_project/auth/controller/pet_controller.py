@@ -16,3 +16,9 @@ class PetController(GeneralController):
 
     def connect_pet_and_diagnoses_from_pet(self, pet_id: int, diagnoses_id: int):
         self._service.connect_pet_and_diagnoses_from_pet(pet_id, diagnoses_id)
+
+    def remove_client_from_pet(self, pet_id: int, client_id: int):
+        self._service.remove_client_from_pet(pet_id, client_id)
+
+    def remove_diagnoses_from_pet(self, pet_id: int, client_id: int):
+        self._service.remove_diagnoses_from_pet(pet_id, client_id)

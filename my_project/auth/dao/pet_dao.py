@@ -23,7 +23,7 @@ class PetDAO(GeneralDAO):
         pet = session.query(Pet).filter_by(id=pet_id).first()
         data = {
             "pet": pet.put_into_dto(),
-            "services": [client.put_into_dto() for client in clients]
+            "clients": [client.put_into_dto() for client in clients]
         }
         return data
 
@@ -56,3 +56,22 @@ class PetDAO(GeneralDAO):
         session = self.get_session()
         session.execute(pet_diagnoses.insert().values(diagnoses_id=diagnoses_id, pet_id=pet_id))
         session.commit()
+
+    def remove_client_from_pet(self, pet_id: int, client_id: int):
+        session = self.get_session()
+        session.execute(
+            client_pet.delete()
+            .where(client_pet.c.client_Id == client_id)
+            .where(client_pet.c.pet_id == pet_id)
+        )
+        session.commit()
+
+    def remove_diagnoses_from_pet(self, pet_id: int, diagnoses_id: int):
+        session = self.get_session()
+        session.execute(
+            pet_diagnoses.delete()
+            .where(pet_diagnoses.c.diagnoses_id == diagnoses_id)
+            .where(pet_diagnoses.c.pet_id == pet_id)
+        )
+        session.commit()
+

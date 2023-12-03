@@ -31,3 +31,12 @@ class DiagnosesDAO(GeneralDAO):
         session = self.get_session()
         session.execute(pet_diagnoses.insert().values(diagnoses_id=diagnoses_id, pet_id=pet_id))
         session.commit()
+
+    def remove_pet_from_diagnoses(self, diagnoses_id: int, pet_id: int):
+        session = self.get_session()
+        session.execute(
+            pet_diagnoses.delete()
+            .where(pet_diagnoses.c.diagnoses_id == diagnoses_id)
+            .where(pet_diagnoses.c.pet_id == pet_id)
+        )
+        session.commit()

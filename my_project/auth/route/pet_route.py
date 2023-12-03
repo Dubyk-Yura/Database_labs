@@ -75,6 +75,28 @@ def patch_pet(pet_id: int) -> Response:
     return make_response("Pet updated", HTTPStatus.OK)
 
 
+@pet_bp.patch('/<int:pet_id>/remove_client')
+def remove_client_from_pet(pet_id) -> Response:
+    try:
+        data = request.get_json()
+        client_id = data.get('client_id')
+        pet_controller.remove_client_from_pet(pet_id, client_id)
+        return make_response(jsonify({"message": "Client removed successfully"}), HTTPStatus.OK)
+    except Exception as e:
+        return make_response(jsonify({"error": str(e)}), HTTPStatus.INTERNAL_SERVER_ERROR)
+
+
+@pet_bp.patch('/<int:pet_id>/remove_diagnoses')
+def remove_diagnoses_from_pet(pet_id) -> Response:
+    try:
+        data = request.get_json()
+        diagnoses_id = data.get('diagnoses_id')
+        pet_controller.remove_diagnoses_from_pet(pet_id, diagnoses_id)
+        return make_response(jsonify({"message": "Diagnoses removed successfully"}), HTTPStatus.OK)
+    except Exception as e:
+        return make_response(jsonify({"error": str(e)}), HTTPStatus.INTERNAL_SERVER_ERROR)
+
+
 @pet_bp.delete('/<int:pet_id>')
 def delete_pet(pet_id: int) -> Response:
     pet_controller.delete(pet_id)

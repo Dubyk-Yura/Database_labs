@@ -52,4 +52,11 @@ class ClientDAO(GeneralDAO):
         session.execute(client_pet.insert().values(client_Id=client_id, pet_id=pet_id))
         session.commit()
 
-
+    def remove_pet_from_client(self, client_id: int, pet_id: int):
+        session = self.get_session()
+        session.execute(
+            client_pet.delete()
+            .where(client_pet.c.client_Id == client_id)
+            .where(client_pet.c.pet_id == pet_id)
+        )
+        session.commit()
