@@ -46,6 +46,24 @@ def create_client() -> Response:
     return make_response(jsonify(obj.put_into_dto()), HTTPStatus.CREATED)
 
 
+@client_bp.post('/add_client_pet')
+def insert_in_client_pet_by_values() -> Response:
+    content = request.get_json()
+    client_name = content.get('client_name')
+    client_surname = content.get('client_surname')
+    client_contact_number = content.get('client_contact_number')
+    pet_name = content.get('pet_name')
+    pet_age = content.get('pet_age')
+    if any(arg is None for arg in [client_name, client_surname, client_contact_number, pet_name, pet_age]):
+        return make_response(jsonify({"error": "Missing required fields"}), HTTPStatus.BAD_REQUEST)
+    try:
+        client_controller.insert_in_client_pet_by_values(client_name, client_surname, client_contact_number, pet_name,
+                                                         pet_age)
+        return make_response(jsonify({"message": "successful connecting"}), HTTPStatus.CREATED)
+    except Exception as e:
+        return make_response(jsonify({"error": str(e)}), HTTPStatus.INTERNAL_SERVER_ERROR)
+
+
 @client_bp.put('/<int:client_id>')
 def update_client(client_id: int) -> Response:
     content = request.get_json()

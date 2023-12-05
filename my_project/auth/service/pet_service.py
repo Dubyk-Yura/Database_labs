@@ -22,3 +22,7 @@ class PetService(GeneralService):
 
     def remove_diagnoses_from_pet(self, pet_id: int, client_id: int):
         self._dao.remove_diagnoses_from_pet(pet_id, client_id)
+
+    def insert_in_client_pet_by_values(self, client_name: str, client_surname: str, client_contact_number: str,
+                                       pet_name: str, pet_age: int):
+        self._dao.insert_in_client_pet_by_values(client_name, client_surname, client_contact_number, pet_name, pet_age)

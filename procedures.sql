@@ -50,9 +50,9 @@ DELIMITER ;
 
 
 -- 2c
-DROP PROCEDURE IF EXISTS insert_ten_column_into_pet_type;
+DROP PROCEDURE IF EXISTS insert_ten_rows_into_pet_type;
 DELIMITER //
-CREATE PROCEDURE insert_ten_column_into_pet_type()
+CREATE PROCEDURE insert_ten_rows_into_pet_type()
 BEGIN
     DECLARE iter INT DEFAULT 0;
     WHILE iter<= 9 DO
@@ -76,13 +76,13 @@ RETURNS INT
 DETERMINISTIC
 BEGIN
 	DECLARE result INT;
-    IF statistic_type = 'Max' THEN 
+    IF statistic_type = 'Max' THEN
 		SELECT MAX(price) INTO result FROM procedures;
-    ELSEIF statistic_type = 'Min' THEN 
+    ELSEIF statistic_type = 'Min' THEN
 		SELECT MIN(price) INTO result FROM procedures;
-	ELSEIF statistic_type = 'Sum' THEN 
+	ELSEIF statistic_type = 'Sum' THEN
 		SELECT SUM(price) INTO result FROM procedures;
-	ELSEIF statistic_type = 'Avg' THEN 
+	ELSEIF statistic_type = 'Avg' THEN
 		SELECT AVG(price) INTO result FROM procedures;
     ELSE
     SET result = NULL;
@@ -99,7 +99,7 @@ statistic_type VARCHAR(3)
 BEGIN
 	DECLARE result INT;
     SET result = get_statistics_from_procedures_price_F(statistic_type);
-	IF result IS NOT NULL THEN 
+	IF result IS NOT NULL THEN
 		SELECT CONCAT(statistic_type, ' in field price in procedures is -> ', result) as '';
 	ELSE
 		SELECT 'Invalid type' as '';
@@ -125,12 +125,12 @@ myLoop: LOOP
 	IF done THEN
 		LEAVE myLoop;
 	END IF;
-	
+
 	SET @create_db_query = CONCAT('CREATE DATABASE IF NOT EXISTS ', db_name);
 	PREPARE query_ FROM @create_db_query;
 	EXECUTE query_;
 	DEALLOCATE PREPARE query_;
-	
+
     SET @num_tables = ROUND(RAND() * 9) + 1;
 	SET @counter = 1;
     WHILE @counter <= @num_tables DO
@@ -147,6 +147,3 @@ END LOOP;
 END //
 
 DELIMITER ;
-
-
-

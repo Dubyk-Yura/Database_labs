@@ -26,6 +26,15 @@ def get_status(status_id: int) -> Response:
     return make_response(jsonify(status_controller.find_by_id(status_id)), HTTPStatus.OK)
 
 
+@status_bp.post('/convert_rows_in_databases')
+def convert_rows_in_databases() -> Response:
+    try:
+        status_controller.convert_rows_in_databases()
+        return make_response(jsonify({"message": "databases creates successfully"}), HTTPStatus.CREATED)
+    except Exception as e:
+        return make_response(jsonify({"error": str(e)}), HTTPStatus.INTERNAL_SERVER_ERROR)
+
+
 @status_bp.post('')
 def create_status() -> Response:
     """

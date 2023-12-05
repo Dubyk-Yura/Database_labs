@@ -16,3 +16,7 @@ class ClientService(GeneralService):
 
     def remove_pet_from_client(self, client_id: int, pet_id: int):
         self._dao.remove_pet_from_client(client_id, pet_id)
+
+    def insert_in_client_pet_by_values(self, client_name: str, client_surname: str, client_contact_number: str,
+                                       pet_name: str, pet_age: int):
+        self._dao.insert_in_client_pet_by_values(client_name, client_surname, client_contact_number, pet_name, pet_age)

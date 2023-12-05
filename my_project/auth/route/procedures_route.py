@@ -17,6 +17,11 @@ def get_procedure(procedure_id: int) -> Response:
     return make_response(jsonify(procedures_controller.find_by_id(procedure_id)), HTTPStatus.OK)
 
 
+@procedures_bp.get('/get_stat_from_procedures/<stat_type>')
+def get_stat_from_procedures(stat_type) -> Response:
+    return make_response(jsonify(procedures_controller.get_statistics_from_procedures_price(stat_type)), HTTPStatus.OK)
+
+
 @procedures_bp.post('')
 def create_procedure() -> Response:
     content = request.get_json()
