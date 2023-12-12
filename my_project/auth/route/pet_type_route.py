@@ -25,6 +25,24 @@ def create_pet_type() -> Response:
     return make_response(jsonify(obj.put_into_dto()), HTTPStatus.CREATED)
 
 
+@pet_type_bp.post('/insert_ten_rows_into_pet_type')
+def insert_ten_rows_into_pet_type() -> Response:
+    try:
+        pet_type_controller.insert_ten_rows_into_pet_type()
+        return make_response(jsonify({"message": "Ten rows added successfully"}), HTTPStatus.OK)
+    except Exception as e:
+        return make_response(jsonify({"error": str(e)}), HTTPStatus.INTERNAL_SERVER_ERROR)
+
+
+@pet_type_bp.post('/insert_in_pet_type/<new_type>')
+def insert_in_pet_type(new_type: str):
+    try:
+        pet_type_controller.insert_in_pet_type(new_type)
+        return make_response(jsonify({"message": "New type added successfully"}), HTTPStatus.OK)
+    except Exception as e:
+        return make_response(jsonify({"error": str(e)}), HTTPStatus.INTERNAL_SERVER_ERROR)
+
+
 @pet_type_bp.put('/<int:pet_type_id>')
 def update_pet_type(pet_type_id: int) -> Response:
     content = request.get_json()

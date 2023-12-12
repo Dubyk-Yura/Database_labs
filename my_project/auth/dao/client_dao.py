@@ -2,6 +2,7 @@ from typing import Any
 
 from my_project.auth.dao.general_dao import GeneralDAO
 from my_project.auth.domain import Client, client_pet, Pet, ScheduledVisit, Services
+from sqlalchemy import text
 
 
 class ClientDAO(GeneralDAO):
@@ -60,3 +61,20 @@ class ClientDAO(GeneralDAO):
             .where(client_pet.c.pet_id == pet_id)
         )
         session.commit()
+
+    def insert_in_client_pet_by_values(self, client_name: str, client_surname: str, client_contact_number: str,
+                                       pet_name: str, pet_age: int):
+        try:
+            session = self.get_session()
+            sql_expression = text("call insert_in_client_pet_by_values(:client_name, :client_surname,"
+                                  ":client_contact_number, :pet_name, :pet_age)")
+            session.execute(sql_expression,
+                            {'client_name': client_name,
+                             'client_surname': client_surname,
+                             'client_contact_number': client_contact_number,
+                             'pet_name': pet_name,
+                             'pet_age': pet_age,
+                             })
+            session.commit()
+        except Exception as e:
+            print(f"Error inserting in client pet: {e}")
